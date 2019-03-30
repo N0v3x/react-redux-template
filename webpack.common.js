@@ -1,10 +1,7 @@
 const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const webpack = require("webpack");
 
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
@@ -14,27 +11,16 @@ module.exports = {
     publicPath: "/"
   },
   plugins: [
-    new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       title: "react template",
       template: "./src/template.html",
       favicon: "./src/favicon.ico"
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].bundle.css",
       chunkFilename: "[name].bundle.css"
     })
   ],
-  optimization: {
-    minimizer: [
-      new TerserPlugin({
-        exclude: /\/node_modules/,
-        parallel: true,
-        extractComments: "all"
-      })
-    ]
-  },
   resolve: {
     extensions: ["*", ".js", ".jsx"]
   },
@@ -45,7 +31,6 @@ module.exports = {
         exclude: /node_modules/,
         use: ["babel-loader"]
       },
-      // more rules goes here
       {
         test: /\.css$/,
         use: [
